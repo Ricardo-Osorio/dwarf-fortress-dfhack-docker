@@ -4,76 +4,80 @@ Run [Dwarf Fortress](https://www.bay12games.com/dwarves/) inside a Docker contai
 
 ![image](https://user-images.githubusercontent.com/26963810/143337607-babd5779-b1e5-4eed-96fc-b3e16beba00a.png)
 
+## Versions
+
+This repo contains two versions of Dwarf Fortress (v47.05) installations, each packaged with different settings and extras:
+ - game packed with dfhack, TWBT, Spacefox's tileset and embark profiles (`main` branch)
+ - vanilla game with the "Kelora_16x16_diagonal-clouds" tileset and embark profiles (`vanilla` branch)
+
 ## Resource usage
 
-As per to its [wiki page](https://www.dwarffortresswiki.org/index.php/DF2014:System_requirements#RAM) you should expect the game to allocate between 300MB to 700MB on medium regions and never more than 1GB.
+As per to its [wiki page](https://www.dwarffortresswiki.org/index.php/DF2014:System_requirements#RAM) and when installed directly on your machine, you should expect the game to allocate between 300MB to 700MB RAM on medium regions and never more than 1GB.
 
-However, when running a container from this image you can expect the resource usage on medium region to go up to ~1GB. That is because on top of the game itself there's also xvfb maintaining an in-memory representation of the _Display_ together with x11vnc and noVNC making constant use of it.
+However, when running a container from this image you can expect the resource usage on medium region to go up to ~1.40GB. That's because on top of the game itself there's also xvfb maintaining an in-memory representation of the _Display_ together with x11vnc and noVNC making constant use of it and dfhack so that much is to be expected.
 
-## NO DFHack
+## The stack of software making this posible
 
-This image only supports the vanilla game and thus [DFHack](https://github.com/DFHack/dfhack) is not included with it nor will it run even if added. Any type of customization supported by the vanilla game can still be added, for example, fonts and tilesets ([one included](https://dwarffortresswiki.org/index.php/File:Kelora_16x16_diagonal-clouds.png) within this repo and activated by default).
+This image runs the following software:
+- [Xvfb](https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml) - Virtual frame buffer X11 server. Creates a virtual Display.
+- [x11vnc](https://wiki.archlinux.org/title/X11vnc) - VNC server that interacts with X displays.
+- [noNVC](https://novnc.com/info.html) - JavaScript VNC client library. Allows to connects to a VNC server through any browser.
+- [Dwarf Fortress](https://www.bay12games.com//dwarves/) - GUI application we intend to run.
+- [DFHack](https://github.com/DFHack/dfhack) - Memory editing library for Dwarf Fortress.
 
-It is however in my plans to give it a go at adding support for DFHack.
+Which are all downloaded at runtime and all is built on top of the image `debian:buster` and has a final image size of ~635MB.
 
-## What's included in the image
+## The image
 
-This image runs:
-- Xvfb - Virtual frame buffer X11 server. Creates a virtual Display.
-- x11vnc - A VNC server that interacts with X displays.
-- noNVC - A JavaScript VNC client library. Allows to connects to a VNC server through any browser.
-- Dwarf Fortress - the GUI application we intend to run.
+The image can be customized with the runtime arguments:
+ - **PLAY_INTRO** if you want to play the intro movie. "YES"/"NO", defaults to "NO".
+ - **SHOW_FPS** if you want to see the game FPS. "YES"/"NO", defaults to "NO"
 
-This is built from the base image `debian:buster` and has a final image size of ~540MB.
+And environment variables:
+ - **DISPLAY_DIMENSIONS** dimensions for the virtual display created by Xvfb. Example being "**1440x763**".
 
-## Build arguments
+If you decide to build the image yourself, be aware that it takes a long time to build.
 
-The image can be customized with the arguments:
- - **DF_VERSION** version of Dwarf Fortress to download. Defaults to "47_05" (latest).
- - **TILESET** name of tileset to use. Defaults to "Kelora_16x16_diagonal-clouds.png" which is included in the repo.
- - **PLAY_INTRO** whether to play the intro movie or not. Defaults to "NO".
+The images are also available on [DockerHub here](https://hub.docker.com/r/ricosorio/dwarffortress/).
 
-## Environment variables
-
-**`DISPLAY_DIMENSIONS`** sets the dimensions for the virtual display created by Xvfb and has the format: \<PIXEL WIDTH>**x**\<PIXEL HEIGHT>**x**\<PIXEL DEPTH>
-
-Example value: "**1440x763x24**"
-
-The best setting is to fill all free inner space on a browser window. Use `window.innerWidth` and `window.innerHeight` on the console to find these values for your screen.
-
-## Volumes
+### Volumes
 
 For the game save files to persist across container restarts it's necessary to mount a host directory to where the game saves these files inside the container.
 **`<host_directory>:/home/df/df_linux/data/save/`**
 
-## Ports
+You can also mount the Dwarf Fortress and DFHack config files between host and container if you want to continue using your own configurations, with your own settings.
 
-We want to access noVNC inside the container but from within our browser so we will have to map the port `8080` to any free port on the host machine.
+### Ports
 
-## Docker Hub
+We want to access noVNC inside the container but from within our browser so we will have to map the port **`8080`** to any free port on the host machine.
 
-The image is available on Docker Hub (built with the default settings).
+## Example of the docker commands
 
-`docker pull ricosorio/dwarffortress`
-
-## Example of docker commands
-
-Build an image with a different tileset (needs to be copied into the Tilesets folder) and without skipping the intro movie of the game.
+To build an image that won't skip the intro movie and shows the game FPS:
 ```
 docker build \
-    --build-arg TILESET=my_tileset.png \
     --build-arg PLAY_INTRO=YES \
+    --build-arg SHOW_FPS=YES \
     . --tag=dwarffortress
 ```
 
 Then, to run a container:
 ```
 docker run \
-    -e 'DISPLAY_DIMENSIONS'='1440x763x24' \
-    -v '/mnt/user/appdata/dwarffortress/':'/home/df/df_linux/data/save/':'rw' \
+    -e 'DISPLAY_DIMENSIONS'='1440x763' \
+    -v '/home/user/games/dwarffortress/':'/home/df/df_linux/data/save/':'rw' \
     -p 9650:8080
+    --security-opt=seccomp=unconfined
     dwarffortress
 ```
+
+## The ugly bits
+
+The connection between your browser and noVNC is **unencrypted** and it's not protected by any kind of authentication/authorization. It is not meant for use over the internet. Use at your own risk.
+
+DFHack needs to be able to make a sys call which is, by default, blocked by Docker (`personality(ADDR_NO_RANDOMIZE)`). To overcome the container needs to run the container with and extra parameter `--security-opt=seccomp=unconfined`. While doing this fixes our problem it also presents a security risk. Read more [here](https://docs.docker.com/engine/security/seccomp/).
+
+It is a known issue that the embark on brand new fortresses will sometimes crash the game but it quickly reboots and will not longer happen again on the same save file. I am not aware of the reason why this happens yet.
 
 ## Logs
 
@@ -82,3 +86,4 @@ When inspecting the container logs you will find all the the processes output bu
 ## References
 
 https://medium.com/@pigiuz/hw-accelerated-gui-apps-on-docker-7fd424fe813e
+https://github.com/BenLubar/df-docker/blob/3c08fafbadfd60788e12d6a9e0e11c05f4ed751b/README.md

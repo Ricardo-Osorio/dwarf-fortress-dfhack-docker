@@ -48,7 +48,13 @@ For the game save files to persist across container restarts it's necessary to m
 
 ## Ports
 
-We want to access noVNC inside the container but from within our browser so we will have to map the port `8080` to an available port of the host.
+We want to access noVNC inside the container but from within our browser so we will have to map the port `8080` to any free port on the host machine.
+
+## Docker Hub
+
+The image is available on Docker Hub (built with the default settings).
+
+`docker pull ricosorio/dwarffortress`
 
 ## Example of docker commands
 

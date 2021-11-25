@@ -37,7 +37,7 @@ RUN ln -s /usr/share/novnc/vnc_lite.html /usr/share/novnc/index.html && \
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 ENTRYPOINT [ "supervisord", "-c", "/etc/supervisor/supervisord.conf" ]
 
-# Create and use a new user
+# Create and use a new user.
 RUN groupadd df && useradd --create-home --gid df df
 WORKDIR /home/df
 USER df

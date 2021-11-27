@@ -2,7 +2,7 @@
 
 Run [Dwarf Fortress](https://www.bay12games.com/dwarves/) inside a Docker container and have it accessible through the browser.
 
-![image](https://user-images.githubusercontent.com/26963810/143337607-babd5779-b1e5-4eed-96fc-b3e16beba00a.png)
+![image](https://user-images.githubusercontent.com/26963810/143682084-fb4769e1-a8f0-4ddf-a4c5-8e0e3e2db6da.png)
 
 ## Versions
 

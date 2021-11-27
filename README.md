@@ -72,7 +72,7 @@ docker run \
 
 ## The ugly bits
 
-The connection between your browser and noVNC is **unencrypted** and it's not protected by any kind of authentication/authorization. It is not meant for use over the internet. Use at your own risk.
+The connection between the browser and noVNC is **unencrypted** and it's not protected by any kind of authentication/authorization, therefore it's not meant to be used over the internet.
 
 ## Logs
 

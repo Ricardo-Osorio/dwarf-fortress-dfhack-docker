@@ -1,6 +1,6 @@
-# Dwarf Fortress within docker
+# Dwarf Fortress within docker <img title="docker-icon" width="55" height="40" src="https://www.docker.com/sites/default/files/d8/styles/role_icon/public/2019-07/Moby-logo.png">
 
-Run [Dwarf Fortress](https://www.bay12games.com/dwarves/) inside a Docker container and have it accessible through the browser.
+Run [Dwarf Fortress](https://www.bay12games.com/dwarves/) in a Docker container and play in the browser!
 
 ![image](https://user-images.githubusercontent.com/26963810/143337607-babd5779-b1e5-4eed-96fc-b3e16beba00a.png)
 
@@ -24,7 +24,7 @@ This image runs the following software:
 - [noNVC](https://novnc.com/info.html) - JavaScript VNC client library. Allows to connects to a VNC server through any browser.
 - [Dwarf Fortress](https://www.bay12games.com//dwarves/) - GUI application we intend to run.
 
-Which are all downloaded at runtime and all is built on top of the image `debian:buster` and has a final image size of ~540MB.
+All downloaded at runtime and built from `debian:buster`. In total the image size is around 540MB.
 
 ## The image
 

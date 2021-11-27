@@ -1,6 +1,6 @@
-# Dwarf Fortress within docker
+# Dwarf Fortress within docker <img title="docker-icon" width="55" height="40" src="https://www.docker.com/sites/default/files/d8/styles/role_icon/public/2019-07/Moby-logo.png">
 
-Run [Dwarf Fortress](https://www.bay12games.com/dwarves/) inside a Docker container and have it accessible through the browser.
+Run [Dwarf Fortress](https://www.bay12games.com/dwarves/) in a Docker container and play in the browser!
 
 ![image](https://user-images.githubusercontent.com/26963810/143682084-fb4769e1-a8f0-4ddf-a4c5-8e0e3e2db6da.png)
 
@@ -25,7 +25,7 @@ This image runs the following software:
 - [Dwarf Fortress](https://www.bay12games.com//dwarves/) - GUI application we intend to run.
 - [DFHack](https://github.com/DFHack/dfhack) - Memory editing library for Dwarf Fortress.
 
-Which are all downloaded at runtime and all is built on top of the image `debian:buster` and has a final image size of ~635MB.
+All downloaded at runtime and built from `debian:buster`. In total the image size is around 635MB.
 
 ## The image
 

@@ -73,11 +73,13 @@ docker run \
 
 ## The ugly bits
 
-The connection between your browser and noVNC is **unencrypted** and it's not protected by any kind of authentication/authorization. It is not meant for use over the internet. Use at your own risk.
+The connection between the browser and noVNC is **unencrypted** and it's not protected by any kind of authentication/authorization, therefore it's not meant to be used over the internet.
 
-DFHack needs to be able to make a sys call which is, by default, blocked by Docker (`personality(ADDR_NO_RANDOMIZE)`). To overcome the container needs to run the container with and extra parameter `--security-opt=seccomp=unconfined`. While doing this fixes our problem it also presents a security risk. Read more [here](https://docs.docker.com/engine/security/seccomp/).
+DFHack needs to be able to make a sys call which is, by default, blocked by Docker (`personality`). To overcome this restriction the container needs to run with and extra parameter `--security-opt=seccomp=unconfined`. While doing this fixes our problem it also presents a security risk. Read more [here](https://docs.docker.com/engine/security/seccomp/).
 
-It is a known issue that the embark on brand new fortresses will sometimes crash the game but it quickly reboots and will not longer happen again on the same save file. I am not aware of the reason why this happens yet.
+I am aware of two minor issues with this setup:
+ - embarking on brand new fortresses the game will sometimes crash, however it quickly reboots and it won't happen twice on the same save file.
+ - playing with `PLAY_INTRO=YES` forces the game to launch in window mode. Press F11 to switch to fullscreen (on macos you need to bind a new key). 
 
 ## Logs
 

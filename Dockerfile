@@ -52,6 +52,14 @@ RUN rm df_linux/libs/libstdc++.so.6
 # Place tilesets where df can find them.
 COPY Tilesets/* df_linux/data/art/
 
+# House cleaning.
+RUN rm -r df_linux/data/sound \
+    df_linux/release\ notes.txt \
+    df_linux/file\ changes.txt
+
+# Embark profiles.
+COPY --chown=df:df embark_profiles.txt df_linux/data/init/embark_profiles.txt
+
 # Game settings.
 ARG TILESET=Kelora_16x16_diagonal-clouds.png
 ARG PLAY_INTRO=NO

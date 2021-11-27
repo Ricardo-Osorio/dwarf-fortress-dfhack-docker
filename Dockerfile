@@ -52,7 +52,7 @@ RUN rm df_linux/libs/libstdc++.so.6
 # Place tilesets where df can find them.
 COPY Tilesets/* df_linux/data/art/
 
-# Settings: fullscreen, no sound (doesn't work), skip intro and custom tileset.
+# Game settings.
 ARG TILESET=Kelora_16x16_diagonal-clouds.png
 ARG PLAY_INTRO=NO
 RUN sed -i "s/WINDOWED:YES/WINDOWED:NO/" df_linux/data/init/init.txt && \
@@ -60,3 +60,5 @@ RUN sed -i "s/WINDOWED:YES/WINDOWED:NO/" df_linux/data/init/init.txt && \
     sed -i "s/INTRO:YES/INTRO:${PLAY_INTRO}/" df_linux/data/init/init.txt && \
     sed -i "s/FONT:curses_640x300.png/FONT:${TILESET}/" df_linux/data/init/init.txt && \
     sed -i "s/FULLFONT:curses_800x600.png/FULLFONT:${TILESET}/" df_linux/data/init/init.txt
+RUN sed -e "s/AUTOSAVE:NONE/AUTOSAVE:SEASONAL/" \
+    -i df_linux/data/init/d_init.txt

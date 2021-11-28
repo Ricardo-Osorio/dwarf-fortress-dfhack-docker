@@ -6,9 +6,9 @@ Run [Dwarf Fortress](https://www.bay12games.com/dwarves/) in a Docker container 
 
 ## Versions
 
-This repo contains two versions of Dwarf Fortress (v47.05) installations, each packaged with different settings and extras:
+This repo contains two versions of Dwarf Fortress (v47.05) installations, each bundled with different settings and extras:
  - game packed with dfhack, TWBT, Spacefox's tileset and embark profiles (`main` branch)
- - vanilla game with the "Kelora_16x16_diagonal-clouds" tileset and embark profiles (`vanilla` branch)
+ - base game with the "Kelora_16x16_diagonal-clouds" tileset and embark profiles (`vanilla` branch)
 
 ## Resource usage
 

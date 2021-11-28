@@ -6,9 +6,9 @@ Run [Dwarf Fortress](https://www.bay12games.com/dwarves/) in a Docker container 
 
 ## Versions
 
-This repo contains two versions of Dwarf Fortress (v47.05) installations, each packaged with different settings and extras:
+This repo contains two versions of Dwarf Fortress (v47.05) installations, each bundled with different settings and extras:
  - game packed with dfhack, TWBT, Spacefox's tileset and embark profiles (`main` branch)
- - vanilla game with the "Kelora_16x16_diagonal-clouds" tileset and embark profiles (`vanilla` branch)
+ - base game with the "Kelora_16x16_diagonal-clouds" tileset and embark profiles (`vanilla` branch)
 
 ## Resource usage
 
@@ -78,7 +78,7 @@ The connection between the browser and noVNC is **unencrypted** and it's not pro
 DFHack needs to be able to make a sys call which is, by default, blocked by Docker (`personality`). To overcome this restriction the container needs to run with and extra parameter `--security-opt=seccomp=unconfined`. While doing this fixes our problem it also presents a security risk. Read more [here](https://docs.docker.com/engine/security/seccomp/).
 
 I am aware of two minor issues with this setup:
- - embarking on brand new fortresses the game will sometimes crash, however it quickly reboots and it won't happen twice on the same save file.
+ - embarking on brand new fortresses will sometimes crash the game, however it quickly reboots and the same thing won't happen twice on the same save file.
  - playing with `PLAY_INTRO=YES` forces the game to launch in window mode. Press F11 to switch to fullscreen (on macos you need to bind a new key). 
 
 ## Logs

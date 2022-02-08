@@ -66,8 +66,8 @@ Then, to run a container:
 docker run \
     -e 'DISPLAY_DIMENSIONS'='1440x763' \
     -v '/home/user/games/dwarffortress/':'/home/df/df_linux/data/save/':'rw' \
-    -p 9650:8080
-    --security-opt=seccomp=unconfined
+    -p 9650:8080 \
+    --security-opt=seccomp=unconfined \
     dwarffortress
 ```
 

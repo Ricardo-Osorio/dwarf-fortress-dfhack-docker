@@ -1,4 +1,4 @@
-# Dwarf Fortress within docker <img title="docker-icon" width="55" height="40" src="https://www.docker.com/sites/default/files/d8/styles/role_icon/public/2019-07/Moby-logo.png">
+# Dwarf Fortress within docker
 
 Run [Dwarf Fortress](https://www.bay12games.com/dwarves/) in a Docker container and play in the browser!
 
@@ -66,7 +66,7 @@ Then, to run a container:
 docker run \
     -e 'DISPLAY_DIMENSIONS'='1440x763' \
     -v '/home/user/games/dwarffortress/':'/home/df/df_linux/data/save/':'rw' \
-    -p 9650:8080
+    -p 9650:8080 \
     dwarffortress
 ```
 
